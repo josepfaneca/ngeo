@@ -1,9 +1,8 @@
 // TODO - MaxScaleDenominator
 // TODO - MinScaleDenominator
 
-goog.provide('gmf.datasource.ExternalDataSourcesManager');
+goog.provide('gmf.datasource.ExternalDatasourcesManager');
 
-goog.require('ol.events');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('ngeo.utils.File');
@@ -13,12 +12,14 @@ goog.require('ngeo.datasource.FileGroup');
 goog.require('ngeo.datasource.OGC');
 goog.require('ngeo.datasource.OGCGroup');
 goog.require('ngeo.datasource.WMSGroup');
+goog.require('ol');
+goog.require('ol.events');
 goog.require('ol.Collection');
 goog.require('ol.format.GPX');
 goog.require('ol.format.KML');
 
 
-gmf.datasource.ExternalDataSourcesManager = class {
+gmf.datasource.ExternalDatasourcesManager = class {
 
   /**
    * External data sources come remote online resources, such as WMS/WMTS
@@ -36,7 +37,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
    * @struct
    * @ngInject
    * @ngdoc service
-   * @ngname gmfExternalDataSourcesManager
+   * @ngname gmfExternalDatasourcesManager
    */
   constructor(gettextCatalog, $injector, $q, $rootScope, ngeoDataSources,
     ngeoFile, ngeoLayerHelper) {
@@ -138,7 +139,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
     /**
      * Cache that stores the information of a WMTS data source. The key is the
      * data source id.
-     * @type {!Object.<number, gmf.datasource.ExternalDataSourcesManager.WMTSCacheItem>}
+     * @type {!Object.<number, gmfx.datasource.ExternalDatasourcesManagerWMTSCacheItem>}
      * @private
      */
     this.wmtsCache_ = {};
@@ -317,7 +318,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
    */
   createAndAddDataSourceFromWMSCapability(layer, capabilities, url) {
 
-    const id = gmf.datasource.ExternalDataSourcesManager.getId(layer);
+    const id = gmf.datasource.ExternalDatasourcesManager.getId(layer);
     const service = capabilities['Service'];
 
     let dataSource;
@@ -394,7 +395,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
    * @export
    */
   createAndAddDataSourceFromWMTSCapability(layer, capabilities, wmtsUrl) {
-    const id = gmf.datasource.ExternalDataSourcesManager.getId(layer);
+    const id = gmf.datasource.ExternalDatasourcesManager.getId(layer);
 
     // (1) No need to do anything if there's already a WMTS data source (and its
     // layer in the map)
@@ -521,7 +522,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
         }
 
         if (features) {
-          const id = gmf.datasource.ExternalDataSourcesManager.getId(file);
+          const id = gmf.datasource.ExternalDatasourcesManager.getId(file);
 
           const dataSource = new ngeo.datasource.File({
             features: new ol.Collection(features),
@@ -660,19 +661,14 @@ gmf.datasource.ExternalDataSourcesManager = class {
  * @return {number} Data source id.
  * @export
  */
-gmf.datasource.ExternalDataSourcesManager.getId = function(layer) {
+gmf.datasource.ExternalDatasourcesManager.getId = function(layer) {
   return ol.getUid(layer) + 1000000;
 };
 
 
-gmf.module.service(
-  'gmfExternalDataSourcesManager', gmf.datasource.ExternalDataSourcesManager);
-
-
-/**
- * @typedef {{
- *     layerObj: (!ol.layer.Tile),
- *     unregister: Function
- * }}
- */
-gmf.datasource.ExternalDataSourcesManager.WMTSCacheItem;
+gmf.datasource.ExternalDatasourcesManager.module = angular.module('gmfExternalDatasourcesManager', [
+  ngeo.utils.File.module.name,
+]);
+gmf.datasource.ExternalDatasourcesManager.module.service('gmfExternalDatasourcesManager',
+  gmf.datasource.ExternalDatasourcesManager);
+gmf.module.requires.push(gmf.datasource.ExternalDatasourcesManager.module.name);

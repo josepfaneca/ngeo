@@ -2,16 +2,15 @@ goog.provide('gmf.import.wmsCapabilityLayertreeComponent');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
-goog.require('gmf.datasource.ExternalDataSourcesManager');
+goog.require('gmf.datasource.ExternalDatasourcesManager');
 /** @suppress {extraRequire} */
 goog.require('ngeo.message.Popup');
 goog.require('ol');
 
-gmf.import.wmsCapabilityLayertreeComponent =
-  angular.module('gmfWmscapabilitylayertreenode', [
-    // todo: add gmf.datasource.ExternalDataSourcesManager
-    ngeo.message.Popup.module.name,
-  ]);
+gmf.import.wmsCapabilityLayertreeComponent = angular.module('gmfWmscapabilitylayertreenode', [
+  gmf.datasource.ExternalDatasourcesManager.module.name,
+  ngeo.message.Popup.module.name,
+]);
 
 gmf.module.requires.push(gmf.import.wmsCapabilityLayertreeComponent.name);
 
@@ -22,8 +21,8 @@ gmf.module.requires.push(gmf.import.wmsCapabilityLayertreeComponent.name);
 gmf.import.wmsCapabilityLayertreeComponent.Controller_ = class {
 
   /**
-   * @param {!gmf.datasource.ExternalDataSourcesManager}
-   *     gmfExternalDataSourcesManager GMF service responsible of managing
+   * @param {!gmf.datasource.ExternalDatasourcesManager}
+   *     gmfExternalDatasourcesManager GMF service responsible of managing
    *     external data sources.
    * @private
    * @struct
@@ -31,7 +30,7 @@ gmf.import.wmsCapabilityLayertreeComponent.Controller_ = class {
    * @ngdoc controller
    * @ngname GmfWmscapabilitylayertreenodeController
    */
-  constructor(gmfExternalDataSourcesManager) {
+  constructor(gmfExternalDatasourcesManager) {
 
     // Binding properties
 
@@ -61,10 +60,10 @@ gmf.import.wmsCapabilityLayertreeComponent.Controller_ = class {
     // Injected properties
 
     /**
-     * @type {!gmf.datasource.ExternalDataSourcesManager}
+     * @type {!gmf.datasource.ExternalDatasourcesManager}
      * @private
      */
-    this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;
+    this.gmfExternalDatasourcesManager_ = gmfExternalDatasourcesManager;
   }
 
   /**
@@ -72,7 +71,7 @@ gmf.import.wmsCapabilityLayertreeComponent.Controller_ = class {
    * @export
    */
   createAndAddDataSource(layer) {
-    this.gmfExternalDataSourcesManager_.createAndAddDataSourceFromWMSCapability(
+    this.gmfExternalDatasourcesManager_.createAndAddDataSourceFromWMSCapability(
       layer,
       this.capabilities,
       this.url

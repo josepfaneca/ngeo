@@ -6,7 +6,7 @@
       class="form-control"
       ng-disabled="$ctrl.aRuleIsActive"
       ng-switch-default
-      ng-model="$ctrl.gmfDataSourceBeingFiltered.dataSource"
+      ng-model="$ctrl.gmfDatasourceBeingFiltered.dataSource"
       ng-options="dataSource.name | translate for dataSource in $ctrl.filtrableDataSources">
     <option value="" translate>-- Layer to filter --</option>
   </select>

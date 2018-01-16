@@ -3,9 +3,9 @@ goog.provide('gmf.filters.filterselectorComponent');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.authentication.Service');
-goog.require('gmf.datasource.DataSourceBeingFiltered');
+goog.require('gmf.datasource.DatasourceBeingFiltered');
 /** @suppress {extraRequire} */
-goog.require('gmf.datasource.DataSourcesHelper');
+goog.require('gmf.datasource.Helper');
 goog.require('gmf.datasource.OGC');
 goog.require('gmf.filters.SavedFilters');
 /** @suppress {extraRequire} */
@@ -24,6 +24,8 @@ goog.require('ngeo.map.FeatureOverlayMgr');
 
 gmf.filters.filterselectorComponent = angular.module('gmfFilterselector', [
   gmf.authentication.Service.module.name,
+  gmf.datasource.DatasourceBeingFiltered.module.name,
+  gmf.datasource.Helper.module.name,
   ngeo.map.FeatureOverlayMgr.module.name,
   ngeo.message.Notification.module.name,
   ngeo.message.modalComponent.name,
@@ -44,10 +46,10 @@ gmf.filters.filterselectorComponent.Controller_ = class {
    * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.$timeout} $timeout Angular timeout service.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
-   * @param {gmf.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
+   * @param {gmfx.datasource.DatasourceBeingFiltered} gmfDatasourceBeingFiltered
    *     The Gmf value service that determines the data source currently being
    *     filtered.
-   * @param {gmf.datasource.DataSourcesHelper} gmfDataSourcesHelper Gmf data
+   * @param {gmf.datasource.Helper} gmfDataSourcesHelper Gmf data
    *     sources helper service.
    * @param {gmf.filters.SavedFilters} gmfSavedFilters Gmf saved filters service.
    * @param {gmfx.User} gmfUser User.
@@ -61,7 +63,7 @@ gmf.filters.filterselectorComponent.Controller_ = class {
    * @ngdoc controller
    * @ngname GmfFilterselectorController
    */
-  constructor($scope, $timeout, gettextCatalog, gmfDataSourceBeingFiltered,
+  constructor($scope, $timeout, gettextCatalog, gmfDatasourceBeingFiltered,
     gmfDataSourcesHelper, gmfSavedFilters, gmfUser, ngeoNotification,
     ngeoFeatureOverlayMgr, ngeoRuleHelper
   ) {
@@ -110,18 +112,18 @@ gmf.filters.filterselectorComponent.Controller_ = class {
      * The data source that can either be selected from the list or have
      * its value set from an external source (for example: the layertree)
      * and that requires to be ready before it can be filtered.
-     * @type {gmf.datasource.DataSourceBeingFiltered}
+     * @type {gmfx.datasource.DatasourceBeingFiltered}
      * @export
      */
-    this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
+    this.gmfDatasourceBeingFiltered = gmfDatasourceBeingFiltered;
 
     $scope.$watch(
-      () => this.gmfDataSourceBeingFiltered.dataSource,
+      () => this.gmfDatasourceBeingFiltered.dataSource,
       this.handleSelectedDataSourceChange_.bind(this)
     );
 
     /**
-     * @type {gmf.datasource.DataSourcesHelper}
+     * @type {gmf.datasource.Helper}
      * @private
      */
     this.gmfDataSourcesHelper_ = gmfDataSourcesHelper;
@@ -208,7 +210,7 @@ gmf.filters.filterselectorComponent.Controller_ = class {
     this.filtrableLayerNodeNames_ = null;
 
     /**
-     * @type {gmf.datasource.DataSources}
+     * @type {gmfx.datasource.DataSources}
      * @private
      */
     this.gmfDataSources_ = gmfDataSourcesHelper.collection;
@@ -326,7 +328,7 @@ gmf.filters.filterselectorComponent.Controller_ = class {
     if (!active) {
       this.aRuleIsActive = false;
       this.timeout_(() => {
-        this.gmfDataSourceBeingFiltered.dataSource = null;
+        this.gmfDatasourceBeingFiltered.dataSource = null;
       });
     }
   }
@@ -410,7 +412,7 @@ gmf.filters.filterselectorComponent.Controller_ = class {
       if (this.defaultFiltrableDataSourceName_ !== undefined &&
           dataSource.name === this.defaultFiltrableDataSourceName_
       ) {
-        this.gmfDataSourceBeingFiltered.dataSource = dataSource;
+        this.gmfDatasourceBeingFiltered.dataSource = dataSource;
       }
     }
   }
@@ -426,8 +428,8 @@ gmf.filters.filterselectorComponent.Controller_ = class {
     if (dataSource.filtrable) {
       ol.array.remove(this.filtrableDataSources, dataSource);
 
-      if (this.gmfDataSourceBeingFiltered.dataSource === dataSource) {
-        this.gmfDataSourceBeingFiltered.dataSource = null;
+      if (this.gmfDatasourceBeingFiltered.dataSource === dataSource) {
+        this.gmfDatasourceBeingFiltered.dataSource = null;
       }
     }
   }

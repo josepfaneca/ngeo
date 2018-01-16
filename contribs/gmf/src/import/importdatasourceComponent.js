@@ -2,7 +2,7 @@ goog.provide('gmf.import.importdatasourceComponent');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
-goog.require('gmf.datasource.ExternalDataSourcesManager');
+goog.require('gmf.datasource.ExternalDatasourcesManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.import.wmsCapabilityLayertreeComponent');
 /** @suppress {extraRequire} */
@@ -11,10 +11,10 @@ goog.require('ngeo.query.Querent');
 goog.require('ngeo.datasource.OGC');
 
 gmf.import.importdatasourceComponent = angular.module('gmfImportdatasource', [
-  // todo: add gmf.datasource.ExternalDataSourcesManager
-  ngeo.query.Querent.module.name,
+  gmf.datasource.ExternalDatasourcesManager.module.name,
   gmf.import.wmsCapabilityLayertreeComponent.name,
   gmf.import.wmtsCapabilityLayertreeComponent.name,
+  ngeo.query.Querent.module.name,
 ]);
 
 gmf.module.requires.push(gmf.import.importdatasourceComponent.name);
@@ -30,8 +30,8 @@ gmf.import.importdatasourceComponent.Controller_ = class {
    * @param {!angular.$injector} $injector Main injector.
    * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.$timeout} $timeout Angular timeout service.
-   * @param {!gmf.datasource.ExternalDataSourcesManager}
-   *     gmfExternalDataSourcesManager GMF service responsible of managing
+   * @param {!gmf.datasource.ExternalDatasourcesManager}
+   *     gmfExternalDatasourcesManager GMF service responsible of managing
    *     external data sources.
    * @param {!ngeo.query.Querent} ngeoQuerent Ngeo querent service.
    * @private
@@ -41,7 +41,7 @@ gmf.import.importdatasourceComponent.Controller_ = class {
    * @ngname GmfImportdatasourceController
    */
   constructor($element, $filter, $injector, $scope, $timeout,
-    gmfExternalDataSourcesManager, ngeoQuerent) {
+    gmfExternalDatasourcesManager, ngeoQuerent) {
 
     // Binding properties
 
@@ -73,10 +73,10 @@ gmf.import.importdatasourceComponent.Controller_ = class {
     this.timeout_ = $timeout;
 
     /**
-     * @type {!gmf.datasource.ExternalDataSourcesManager}
+     * @type {!gmf.datasource.ExternalDatasourcesManager}
      * @private
      */
-    this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;
+    this.gmfExternalDatasourcesManager_ = gmfExternalDatasourcesManager;
 
     /**
      * @type {!ngeo.query.Querent}
@@ -225,7 +225,7 @@ gmf.import.importdatasourceComponent.Controller_ = class {
    * Called on initialization of the component.
    */
   $onInit() {
-    this.gmfExternalDataSourcesManager_.map = this.map;
+    this.gmfExternalDatasourcesManager_.map = this.map;
 
 
     if (this.serversEngine_) {
@@ -306,7 +306,7 @@ gmf.import.importdatasourceComponent.Controller_ = class {
    */
   load() {
     const file = goog.asserts.assert(this.file);
-    this.gmfExternalDataSourcesManager_.createAndAddDataSourceFromFile(file);
+    this.gmfExternalDatasourcesManager_.createAndAddDataSourceFromFile(file);
   }
 
   /**

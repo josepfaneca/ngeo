@@ -219,12 +219,12 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   this.crosshairEnabledByDefault_ = !!gmfPermalinkOptions.crosshairEnabledByDefault;
 
   /**
-   * @type {?gmf.datasource.ExternalDataSourcesManager}
+   * @type {?gmf.datasource.ExternalDatasourcesManager}
    * @private
    */
-  this.gmfExternalDataSourcesManager_ =
-    $injector.has('gmfExternalDataSourcesManager') ?
-      $injector.get('gmfExternalDataSourcesManager') : null;
+  this.gmfExternalDatasourcesManager_ =
+    $injector.has('gmfExternalDatasourcesManager') ?
+      $injector.get('gmfExternalDatasourcesManager') : null;
 
   /**
    * @type {?gmf.theme.Themes}
@@ -461,31 +461,31 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
    */
   this.setExternalDataSourcesStatePromise_ = null;
 
-  if (this.ngeoQuerent_ && this.gmfExternalDataSourcesManager_) {
+  if (this.ngeoQuerent_ && this.gmfExternalDatasourcesManager_) {
     // First, load the external data sources that are defined in the url
     this.initExternalDataSources_().then(() => {
       // Then, listen to the changes made to the external data sources to
       // update the url accordingly.
       ol.events.listen(
-        this.gmfExternalDataSourcesManager_.wmsGroupsCollection,
+        this.gmfExternalDatasourcesManager_.wmsGroupsCollection,
         'add',
         this.handleExternalDSGroupCollectionAdd_,
         this
       );
       ol.events.listen(
-        this.gmfExternalDataSourcesManager_.wmsGroupsCollection,
+        this.gmfExternalDatasourcesManager_.wmsGroupsCollection,
         'remove',
         this.handleExternalDSGroupCollectionRemove_,
         this
       );
       ol.events.listen(
-        this.gmfExternalDataSourcesManager_.wmtsGroupsCollection,
+        this.gmfExternalDatasourcesManager_.wmtsGroupsCollection,
         'add',
         this.handleExternalDSGroupCollectionAdd_,
         this
       );
       ol.events.listen(
-        this.gmfExternalDataSourcesManager_.wmtsGroupsCollection,
+        this.gmfExternalDatasourcesManager_.wmtsGroupsCollection,
         'remove',
         this.handleExternalDSGroupCollectionRemove_,
         this
@@ -493,10 +493,10 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
 
       // We also need to 'register' the existing groups as well, i.e. those
       // that were created by the Permalink
-      for (const wmsGroup of this.gmfExternalDataSourcesManager_.wmsGroups) {
+      for (const wmsGroup of this.gmfExternalDatasourcesManager_.wmsGroups) {
         this.registerExternalDSGroup_(wmsGroup);
       }
-      for (const wmtsGroup of this.gmfExternalDataSourcesManager_.wmtsGroups) {
+      for (const wmtsGroup of this.gmfExternalDatasourcesManager_.wmtsGroups) {
         this.registerExternalDSGroup_(wmtsGroup);
       }
     });
@@ -1210,7 +1210,7 @@ gmf.Permalink.prototype.initExternalDataSources_ = function() {
 
   const ngeoQuerent = goog.asserts.assert(this.ngeoQuerent_);
   const gmfExtDSManager = goog.asserts.assert(
-    this.gmfExternalDataSourcesManager_);
+    this.gmfExternalDatasourcesManager_);
 
   const promises = [];
 
@@ -1422,7 +1422,7 @@ gmf.Permalink.prototype.setExternalDataSourcesState_ = function() {
     const urls = [];
 
     // (1) Collect WMS Groups and their layer names
-    for (const wmsGroup of this.gmfExternalDataSourcesManager_.wmsGroups) {
+    for (const wmsGroup of this.gmfExternalDatasourcesManager_.wmsGroups) {
 
       // (1a) url
       urls.push(wmsGroup.url);
@@ -1442,7 +1442,7 @@ gmf.Permalink.prototype.setExternalDataSourcesState_ = function() {
     }
 
     // (2) Collect WMTS Groups and their layer names
-    for (const wmtsGroup of this.gmfExternalDataSourcesManager_.wmtsGroups) {
+    for (const wmtsGroup of this.gmfExternalDatasourcesManager_.wmtsGroups) {
 
       // (2a) url
       urls.push(wmtsGroup.url);

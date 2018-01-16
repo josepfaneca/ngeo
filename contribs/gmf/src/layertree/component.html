@@ -244,23 +244,23 @@
 
 <ul
    class="gmf-layertree-root-external-datasources"
-   ng-if="layertreeCtrl.isRoot && (gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmsGroups.length || gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmtsGroups.length || gmfLayertreeCtrl.gmfExternalDataSourcesManager.fileGroup.dataSources.length)">
+   ng-if="layertreeCtrl.isRoot && (gmfLayertreeCtrl.gmfExternalDatasourcesManager.wmsGroups.length || gmfLayertreeCtrl.gmfExternalDatasourcesManager.wmtsGroups.length || gmfLayertreeCtrl.gmfExternalDatasourcesManager.fileGroup.dataSources.length)">
   <gmf-datasourcegrouptree
     class="gmf-layertree-node gmf-layertree-depth-1"
-    ng-repeat="wmtsGroup in gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmtsGroups"
+    ng-repeat="wmtsGroup in gmfLayertreeCtrl.gmfExternalDatasourcesManager.wmtsGroups"
     group="wmtsGroup"
   >
   </gmf-datasourcegrouptree>
   <gmf-datasourcegrouptree
     class="gmf-layertree-node gmf-layertree-depth-1"
-    ng-repeat="wmsGroup in gmfLayertreeCtrl.gmfExternalDataSourcesManager.wmsGroups"
+    ng-repeat="wmsGroup in gmfLayertreeCtrl.gmfExternalDatasourcesManager.wmsGroups"
     group="wmsGroup"
   >
   </gmf-datasourcegrouptree>
   <gmf-datasourcegrouptree
     class="gmf-layertree-node gmf-layertree-depth-1"
-    ng-if="gmfLayertreeCtrl.gmfExternalDataSourcesManager.fileGroup.dataSources.length"
-    group="gmfLayertreeCtrl.gmfExternalDataSourcesManager.fileGroup"
+    ng-if="gmfLayertreeCtrl.gmfExternalDatasourcesManager.fileGroup.dataSources.length"
+    group="gmfLayertreeCtrl.gmfExternalDatasourcesManager.fileGroup"
   >
   </gmf-datasourcegrouptree>
 </ul>
