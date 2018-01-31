@@ -37,7 +37,7 @@ module.exports = function(config) {
 
     webpack: webpackConfig,
 
-    plugins: ['karma-coverage-istanbul-reporter'],
+//    plugins: ['karma-coverage-istanbul-reporter'],
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
