@@ -1,5 +1,7 @@
 goog.provide('gmf.controllers.defaultConfig');
 
+// webpack: import 'angular-dynamic-locale';
+
 gmf.controllers.defaultConfig = angular.module('gmfDefaultConfig', [
   'gettext',
   'tmh.dynamicLocale',
