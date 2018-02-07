@@ -77,7 +77,7 @@ ngeo.map.FeatureOverlay.prototype.setFeatures = function(features) {
     ol.events.unlisten(this.features_, 'remove', this.handleFeatureRemove_, this);
   }
   if (features !== null) {
-    features.forEach(function(feature) {
+    features.forEach((feature) => {
       this.addFeature(feature);
     }, this);
     ol.events.listen(features, 'add', this.handleFeatureAdd_, this);
