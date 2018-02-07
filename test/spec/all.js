@@ -27,4 +27,6 @@ import './directives/filereader.spec.js';
 import './directives/scaleselector.spec.js';
 import './directives/layertree.spec.js';
 import './directives/grid.spec.js';
+import '../../.build/templatecache.js';
+import '../../.build/gmftemplatecache.js';
 import '../../contribs/gmf/test/spec/all.js';
