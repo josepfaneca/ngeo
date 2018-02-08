@@ -835,7 +835,6 @@ $(EXTERNS_JQUERY): github_versions
 		--var "partials=ngeo:src gmf:contribs/gmf/src" \
 		--var "app=app" $< > $@
 
-test/spec/beforeeach.js
 .PRECIOUS: test/spec/templatecache.js
 test/spec/templatecache.js: buildtools/templatecache-webpack.mako.js \
 		.build/glob2.timestamp \
