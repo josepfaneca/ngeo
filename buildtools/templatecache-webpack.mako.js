@@ -1,4 +1,5 @@
 ## -*- coding: utf-8 -*-
+/*eslint valid-jsdoc: 0 */
 <%doc>
     This is a Mako template that generates Angular code putting the contents of
     HTML partials into Angular's $templateCache. The generated code is then built
@@ -43,7 +44,7 @@ import app from '${app}';
    * @param {angular.cacheFactory.Cache} $templateCache
    * @ngInject
    */
-  let runner = function($templateCache) {
+  const runner = function($templateCache) {
   % for partial in _partials:
     $templateCache.put('${partial}', '${_partials[partial]}');
   %endfor
