@@ -2,7 +2,8 @@
 // webpack: import 'angular';
 // webpack: import 'angular-mocks';
 // webpack: import 'angular-gettext';
-import './beforeeach.js';
+import './templatecache.js';
+import './gmftemplatecache.js';
 import './search/createlocationsearchbloodhound.spec.js';
 import './services/wmstime.spec.js';
 import './services/layerHelper.spec.js';
@@ -27,6 +28,4 @@ import './directives/filereader.spec.js';
 import './directives/scaleselector.spec.js';
 import './directives/layertree.spec.js';
 import './directives/grid.spec.js';
-import '../../.build/templatecache.js';
-import '../../.build/gmftemplatecache.js';
 import '../../contribs/gmf/test/spec/all.js';
